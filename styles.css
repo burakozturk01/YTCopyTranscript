@@ -1,0 +1,53 @@
+/* Base styles for both buttons */
+.yt-copy-transcript-btn,
+.yt-show-transcript-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  color: #f1f1f1;
+  background-color: #272727;
+}
+
+/* On hover */
+.yt-copy-transcript-btn:hover,
+.yt-show-transcript-btn:hover {
+  background-color: #3d3d3d;
+}
+
+/* Separate colors if needed */
+.yt-show-transcript-btn {
+  background-color: #2c2c2c;
+}
+
+.yt-copy-transcript-btn {
+  background-color: #1f1f1f;
+  margin-left: auto;
+}
+
+/* Active/pressed state */
+.yt-copy-transcript-btn:active,
+.yt-show-transcript-btn:active {
+  background-color: #555;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  .yt-copy-transcript-btn,
+  .yt-show-transcript-btn {
+    background-color: #272727;
+    color: #f1f1f1;
+  }
+
+  .yt-copy-transcript-btn:hover,
+  .yt-show-transcript-btn:hover {
+    background-color: #3a3a3a;
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Transcript Copier",
+  "version": "1.0",
+  "description": "Copies YouTube video transcripts as coherent text without timestamps",
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/watch*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "host_permissions": ["https://www.youtube.com/watch*"]
+}
