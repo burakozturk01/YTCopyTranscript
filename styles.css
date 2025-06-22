@@ -1,53 +1,181 @@
-/* Base styles for both buttons */
+/* Updated styles to match YouTube's native buttons */
 .yt-copy-transcript-btn,
 .yt-show-transcript-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 6px 14px;
-  font-size: 13px;
+  gap: 6px;
+  padding: 0 12px;
+  height: 36px;
+  min-width: 0;
+  font-family: "YouTube Sans", "Roboto", sans-serif;
+  font-size: 14px;
   font-weight: 500;
+  line-height: 36px;
   border: none;
-  border-radius: 20px;
+  border-radius: 18px;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: all 0.1s cubic-bezier(0.05, 0, 0, 1);
   color: #f1f1f1;
-  background-color: #272727;
+  background-color: rgba(255, 255, 255, 0.1);
+  text-transform: none;
+  letter-spacing: 0.25px;
+  outline: none;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  transform: scale(1);
 }
 
-/* On hover */
+/* Hover state */
 .yt-copy-transcript-btn:hover,
 .yt-show-transcript-btn:hover {
-  background-color: #3d3d3d;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.02);
 }
 
-/* Separate colors if needed */
-.yt-show-transcript-btn {
-  background-color: #2c2c2c;
-}
-
-.yt-copy-transcript-btn {
-  background-color: #1f1f1f;
-  margin-left: auto;
-}
-
-/* Active/pressed state */
+/* Active/pressed state with satisfying click animation */
 .yt-copy-transcript-btn:active,
 .yt-show-transcript-btn:active {
-  background-color: #555;
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
+  transition: all 0.05s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Dark mode */
-@media (prefers-color-scheme: dark) {
-  .yt-copy-transcript-btn,
-  .yt-show-transcript-btn {
-    background-color: #272727;
-    color: #f1f1f1;
-  }
+/* Click animation keyframes */
+@keyframes buttonClick {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.92); }
+  100% { transform: scale(1.05); }
+}
 
-  .yt-copy-transcript-btn:hover,
-  .yt-show-transcript-btn:hover {
-    background-color: #3a3a3a;
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
   }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Add ripple effect on click */
+.yt-copy-transcript-btn::before,
+.yt-show-transcript-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%) scale(0);
+  transition: none;
+  pointer-events: none;
+}
+
+/* Trigger animations with JavaScript classes */
+.yt-copy-transcript-btn.clicked,
+.yt-show-transcript-btn.clicked {
+  animation: buttonClick 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.yt-copy-transcript-btn.clicked::before,
+.yt-show-transcript-btn.clicked::before {
+  animation: ripple 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Success animation for copy button */
+@keyframes copySuccess {
+  0% { transform: scale(1); background-color: rgba(255, 255, 255, 0.1); }
+  25% { transform: scale(0.9); background-color: rgba(76, 175, 80, 0.3); }
+  50% { transform: scale(1.1); background-color: rgba(76, 175, 80, 0.4); }
+  100% { transform: scale(1); background-color: rgba(76, 175, 80, 0.2); }
+}
+
+.yt-copy-transcript-btn.success {
+  animation: copySuccess 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Disabled state */
+.yt-copy-transcript-btn:disabled,
+.yt-show-transcript-btn:disabled {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+  transform: scale(1);
+}
+
+.yt-copy-transcript-btn:disabled:hover,
+.yt-show-transcript-btn:disabled:hover {
+  transform: scale(1);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Focus state for accessibility */
+.yt-copy-transcript-btn:focus-visible,
+.yt-show-transcript-btn:focus-visible {
+  outline: 2px solid #3ea6ff;
+  outline-offset: 2px;
+}
+
+/* SVG icon styling with subtle animation */
+.yt-copy-transcript-btn svg,
+.yt-show-transcript-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  flex-shrink: 0;
+  transition: transform 0.1s ease;
+}
+
+.yt-copy-transcript-btn:active svg,
+.yt-show-transcript-btn:active svg {
+  transform: scale(0.9);
+}
+
+/* Text styling */
+.yt-copy-transcript-btn span,
+.yt-show-transcript-btn span {
+  display: inline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Dark theme adjustments */
+html[dark] .yt-copy-transcript-btn,
+html[dark] .yt-show-transcript-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f1f1f1;
+}
+
+html[dark] .yt-copy-transcript-btn:hover,
+html[dark] .yt-show-transcript-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+html[dark] .yt-copy-transcript-btn::before,
+html[dark] .yt-show-transcript-btn::before {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Light theme */
+html:not([dark]) .yt-copy-transcript-btn,
+html:not([dark]) .yt-show-transcript-btn {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #0f0f0f;
+}
+
+html:not([dark]) .yt-copy-transcript-btn:hover,
+html:not([dark]) .yt-show-transcript-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+html:not([dark]) .yt-copy-transcript-btn::before,
+html:not([dark]) .yt-show-transcript-btn::before {
+  background: rgba(0, 0, 0, 0.2);
 }

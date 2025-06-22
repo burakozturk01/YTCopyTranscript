@@ -62,6 +62,10 @@ function addShowTranscriptButton() {
         `;
         
         showBtn.addEventListener('click', async function handleClick() {
+			
+		  showBtn.classList.add('clicked');
+		  setTimeout(() => showBtn.classList.remove('clicked'), 300);
+		  
           // Disable the button during processing
           showBtn.disabled = true;
           
@@ -157,6 +161,9 @@ function addCopyButtonToTranscript(container) {
   
   copyBtn.addEventListener('click', async () => {
     try {
+	  // Add click animation
+	  copyBtn.classList.add('clicked');
+	  setTimeout(() => copyBtn.classList.remove('clicked'), 300);
       copyBtn.disabled = true;
       
       const transcriptSelectors = [
@@ -204,6 +211,11 @@ function addCopyButtonToTranscript(container) {
 
       await navigator.clipboard.writeText(fullText);
       showButtonFeedback(copyBtn, 'Copied!', '#0a8043');
+	 	
+	  // Add success animation after successful copy
+	  copyBtn.classList.add('success');
+	  setTimeout(() => copyBtn.classList.remove('success'), 600);
+	  
     } catch (error) {
       console.error('Copy failed:', error);
       showButtonFeedback(copyBtn, 'Error!', '#d93025');
@@ -211,6 +223,21 @@ function addCopyButtonToTranscript(container) {
       copyBtn.disabled = false;
     }
   });
+
+	// For the copy button
+	copyBtn.addEventListener('click', async () => {
+	  try {
+		
+		copyBtn.disabled = true;
+		
+		// ... your existing copy logic ...
+		
+	  } catch (error) {
+		// ... error handling ...
+	  } finally {
+		copyBtn.disabled = false;
+	  }
+	});
 
   const header = container.querySelector('#header, .header, .panel-header');
   if (header) {
